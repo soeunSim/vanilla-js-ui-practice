@@ -9,7 +9,21 @@ selectButton.addEventListener("click", function() {
 });
 
 selectCloseBtn.addEventListener("click", function() {
+    if( selectNav.classList.contains("on")) {
+      closeMenu();
+    }
+});
+
+window.addEventListener('keyup', (event) => {
+  if(event.key === "Escape") {
+    if( selectNav.classList.contains("on")) {
+      closeMenu();
+    }
+  }
+})
+
+function closeMenu() {
   selectNav.classList.remove("on");
   selectButton.setAttribute("aria-expanded", "false");
-  selectNav.setAttribute("aria-hidden", "true");
-});
+  selectNav.setAttribute("aria-hidden", "true"); 
+}
