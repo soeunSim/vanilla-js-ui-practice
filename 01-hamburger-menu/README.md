@@ -21,22 +21,33 @@
    - 의사코드, 설계 다이어그램, 테스트 스니펫을 README에 고민을 기록하기  
 
 
-## 기술 설계 (리펙토링 의사코드)
+## 기술 설계 (리팩토링 의사코드)
+### handleOpenMenu()
+1. 메뉴 보이기/숨기기 클래스 토글  
+2. aria 상태 변경  
+3. 스크롤 잠금  
+4. 첫 요소 포커스 이동
 
-### 01. 함수 모듈화
-기존 eventHendler에서 받아오는 이벤트는 별다른 event를 가져오고 있지 않으므로 래퍼를 제외한 해당 함수만들 호출하도록 핵심 함수를 모듈화 하는 방향으로 리팩토링을 진행하였습니다. 더불어 모듈화로 변경하면서 해당 동작하는 함수 기능을 직관적으로 알 수 있도록 'openMenu', 'closeMenu' 이와 같이 통일 하게 되었습니다. 모듈화 시키기 위한 의사코드는 아래와 같습니다.
+### handleCloseMenu()
+1. 메뉴 보이기/숨기기 클래스 해제  
+2. aria 상태 변경  
+3. 스크롤 복원  
+4. 버튼으로 포커스 복귀
 
-**[openMenu()]**
-1. 메뉴 클래스 토글 (`.on` / `.hidden`)  
-2. aria 속성 토글 (`aria-expanded`, `aria-hidden`)  
-3. body 스크롤 제어  
-4. `requestAnimationFrame` → 사용자가 menu화면 진입 시 첫 포커스
 
-**[closeMenu()]**
-1. 클래스 토글 해제  
-2. aria 속성 토글  
-3. body 스크롤 복원  
-4. 메뉴 버튼 포커스 복귀   
+## WAI-ARIA 역할 및 상태 관리
+
+### 역할(role) 사용 예시
+- `<nav role="navigation">…</nav>`  
+- `<ul role="menu">…</ul>` / `<li role="menuitem">…</li>`
+
+### 상태(state) 토글
+- openMenu 실행 시  
+  - `aria-expanded="true"`  
+  - `aria-hidden="false"`  
+- closeMenu 실행 시  
+  - `aria-expanded="false"`  
+  - `aria-hidden="true"`
 
 ## 최종 검증 전략
 - **Unit Test (Jest + JSDOM)**: `aria-*` 토글, focus-trap 순환  

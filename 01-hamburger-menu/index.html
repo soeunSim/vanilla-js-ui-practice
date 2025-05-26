@@ -9,16 +9,16 @@
 <body>
   <div id="overlay" class="overlay hidden" aria-hidden="true"></div>
   <header>
-    <button id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="sideMenu">🍔</button>
+    <button id="menuOpenBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="sideMenu">🍔</button>
   </header>
 
-  <nav id="sideMenu" aria-hidden="true">
-    <button id="closeBtn" aria-label="메뉴 닫기">❌</button>
-    <ul>
-      <li><a href="#">홈</a></li>
-      <li><a href="#">소개</a></li>
-      <li><a href="#">서비스</a></li>
-      <li><a href="#">문의</a></li>
+  <nav id="sideMenu" role="navigation" aria-modal="true" aria-hidden="true">
+    <button id="menuCloseBtn" role="button" aria-label="메뉴 닫기">❌</button>
+    <ul role="menu">
+      <li role="menuitem"><a href="#">홈</a></li>
+      <li role="menuitem"><a href="#">소개</a></li>
+      <li role="menuitem"><a href="#">서비스</a></li>
+      <li role="menuitem"><a href="#">문의</a></li>
     </ul>
   </nav>
 

@@ -1,6 +1,6 @@
-const selectButton = document.getElementById('menuToggle');
+const selectButton = document.getElementById('menuOpenBtn');
 const selectNav = document.getElementById('sideMenu');
-const selectCloseBtn = document.getElementById('closeBtn');
+const selectCloseBtn = document.getElementById('menuCloseBtn');
 const selectMenuOverlay = document.getElementById('overlay');
 
 const focusableElements = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
@@ -8,7 +8,7 @@ const focusables = selectNav.querySelectorAll(focusableElements);
 const firstFocus = focusables[0];
 const lastFocus = focusables[focusables.length - 1];
 
-const openMenu = () => {
+const handleOpenMenu = () => {
   selectNav.classList.add('on');
   selectMenuOverlay.classList.remove('hidden');
 
@@ -23,7 +23,7 @@ const openMenu = () => {
   });
 }
 
-const closeMenu = () => {
+const handleCloseMenu = () => {
   if (!selectNav.classList.contains('on')) {
     return;
   }
@@ -40,13 +40,16 @@ const closeMenu = () => {
 
 window.addEventListener('keyup', (event) => {
   if (event.key === 'Escape') {
-    closeMenu();
+    handleCloseMenu();
   }
 });
 
-selectNav.addEventListener('keydown', (event) => {
+const handleFocusTrap = (event) => {
   const isTabPressed = event.key === 'Tab';
   const isShiftPressed = event.shiftKey;
+  if (!isTabPressed) {
+    return;
+  }
 
   if (isTabPressed && isShiftPressed) {
     if (document.activeElement === firstFocus) {
@@ -59,8 +62,9 @@ selectNav.addEventListener('keydown', (event) => {
       firstFocus.focus();
     }
   }
-});
+};
 
-selectButton.addEventListener('click', openMenu);
-selectCloseBtn.addEventListener('click', closeMenu);
-selectMenuOverlay.addEventListener('click', closeMenu);
+selectButton.addEventListener('click', handleOpenMenu);
+selectCloseBtn.addEventListener('click', handleCloseMenu);
+selectMenuOverlay.addEventListener('click', handleCloseMenu);
+selectNav.addEventListener('keydown', handleFocusTrap);
